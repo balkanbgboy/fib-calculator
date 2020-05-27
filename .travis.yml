@@ -14,7 +14,7 @@ after_success:
   - docker build -t madolka/multi-server ./server
   - docker build -t madolka/multi-worker ./worker
   # Log in to Docker CLI
-  - echo "$Docker_Pass" | docker login -u "$Docker_ID" --password-stdin docker.io
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push madolka/multi-client
   - docker push madolka/multi-nginx
