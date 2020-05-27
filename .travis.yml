@@ -3,20 +3,20 @@ service:
   - docker
 
 before_install:
-  - docker build -t madolka/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t balkanbgboy/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true madolka/react-test npm test
+  - docker run -e CI=true balkanbgboy/react-test npm test
 
 after_success:
-  - docker build -t madolka/multi-client ./client
-  - docker build -t madolka/multi-nginx ./nginx
-  - docker build -t madolka/multi-server ./server
-  - docker build -t madolka/multi-worker ./worker
+  - docker build -t balkanbgboy/multi-client ./client
+  - docker build -t balkanbgboy/multi-nginx ./nginx
+  - docker build -t balkanbgboy/multi-server ./server
+  - docker build -t balkanbgboy/multi-worker ./worker
   # Log in to Docker CLI
-  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin docker.io
   # Take those images and push them to docker Hub
-  - docker push madolka/multi-client
-  - docker push madolka/multi-nginx
-  - docker push madolka/multi-server
-  - docker push madolka/multi-worker
+  - docker push balkanbgboy/multi-client
+  - docker push balkanbgboy/multi-nginx
+  - docker push balkanbgboy/multi-server
+  - docker push balkanbgboy/multi-worker
