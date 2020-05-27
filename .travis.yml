@@ -1,0 +1,22 @@
+sudo: required
+service:
+  - docker
+
+before_install:
+  - docker build -t madolka/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true madolka/react-test npm test
+
+after_success:
+  - docker build -t madolka/multi-client ./client
+  - docker build -t madolka/multi-nginx ./nginx
+  - docker build -t madolka/multi-server ./server
+  - docker build -t madolka/multi-worker ./worker
+  # Log in to Docker CLI
+  - echo "$Docker_Pass" | docker login -u "$Docker_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push madolka/multi-client
+  - docker push madolka/multi-nginx
+  - docker push madolka/multi-server
+  - docker push madolka/multi-worker
