@@ -1,0 +1,36 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "balkanbgboy/multi-client",
+            "hostname": "client",
+            "essectial": false
+        },
+        {
+            "name": "server",
+            "image": "balkanbgboy/multi-server",
+            "hostname": "api",
+            "essectial": false
+        },
+        {
+            "name": "worker",
+            "image": "balkanbgboy/multi-worker",
+            "hostname": "worker",
+            "essectial": false
+        },
+        {
+            "name": "nginx",
+            "image": "balkanbgboy/multi-nginx",
+            "hostname": "nginx",
+            "essectial": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"]
+        }
+    ]
+}
